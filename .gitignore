@@ -1,0 +1,27 @@
+# build output
+bin/
+obj/
+.vs/
+
+# NuGet packages restored locally
+packages/
+
+# generated LocalDB database
+App_Data/*.mdf
+App_Data/*.ldf
+App_Data/*.mdf.mdf
+App_Data/*.ldf.ldf
+
+# user specific files
+*.user
+*.suo
+*.cache
+
+# LocalDB files in the project folder
+**/App_Data/*.mdf
+**/App_Data/*.ldf
+**/App_Data/*.mdf.mdf
+
+# lab report and screenshots stay out of the repo
+Lab7_Report.docx
+docs/
