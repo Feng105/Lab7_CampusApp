@@ -24,6 +24,14 @@
                     <li>@Html.ActionLink("Campuses", "Index", "UniversityCampuses", new { area = "" }, new { @class = "nav-link" })</li>
                     <li>@Html.ActionLink("Students", "Index", "Students", new { area = "" }, new { @class = "nav-link" })</li>
                 </ul>
+
+                @using (Html.BeginForm("Index", "Students", FormMethod.Get, new { @class = "navbar-form navbar-left", style = "display: flex" }))
+                {
+                    <div class="form-group">
+                        @Html.TextBox("Search", null, new { @class = "form-control", @placeholder = "Search Students" })
+                    </div>
+                    <button type="submit" class="btn btn-light">Search</button>
+                }
             </div>
         </div>
     </nav>

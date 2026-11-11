@@ -7,6 +7,7 @@ using System.Web;
 using System.Web.Mvc;
 using CampusApp.Data;
 using CampusApp.Models;
+using CampusApp.ViewModels;
 
 namespace CampusApp.Controllers
 {
@@ -15,10 +16,39 @@ namespace CampusApp.Controllers
         private CampusContext db = new CampusContext();
 
         // GET: Students
-        public ActionResult Index()
+        public ActionResult Index(string campus, string search)
         {
+            StudentIndexViewModel viewModel = new StudentIndexViewModel();
+
             var students = db.Students.Include(s => s.Campus);
-            return View(students.ToList());
+
+            if (!String.IsNullOrEmpty(search))
+            {
+                students = students.Where(s => s.Name.Contains(search) ||
+                                               s.Address.Contains(search) ||
+                                               s.Campus.Name.Contains(search));
+                viewModel.Search = search;
+            }
+
+            //count the students per campus before the campus filter removes any rows
+            viewModel.CampusesWithCount = from s in students
+                                          where s.CampusID != null
+                                          group s by s.Campus.Name into campusGroup
+                                          select new CampusWithCount
+                                          {
+                                              CampusName = campusGroup.Key,
+                                              StudentCount = campusGroup.Count()
+                                          };
+
+            if (!String.IsNullOrEmpty(campus))
+            {
+                students = students.Where(s => s.Campus.Name == campus);
+            }
+
+            viewModel.Students = students.OrderBy(s => s.Campus.Name).ThenBy(s => s.Name).ToList();
+            viewModel.Campus = campus;
+
+            return View(viewModel);
         }
 
         // GET: Students/Details/5

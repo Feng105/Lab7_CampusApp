@@ -133,6 +133,7 @@
     <Compile Include="Controllers\StudentsController.cs" />
     <Compile Include="Controllers\UniversityCampusesController.cs" />
     <Compile Include="Data\CampusContext.cs" />
+    <Compile Include="ViewModels\StudentIndexViewModel.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

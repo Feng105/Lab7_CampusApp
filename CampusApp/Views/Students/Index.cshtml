@@ -1,4 +1,4 @@
-@model IEnumerable<CampusApp.Models.Student>
+@model CampusApp.ViewModels.StudentIndexViewModel
 
 @{
     ViewBag.Title = "Students";
@@ -9,21 +9,35 @@
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
+
+@using (Html.BeginForm("Index", "Students", FormMethod.Get, new { @class = "d-flex align-items-center gap-2 mb-2" }))
+{
+    <label for="Campus" class="mb-0">Filter by campus:</label>
+    @Html.DropDownListFor(vm => vm.Campus, Model.CampusFilterItems, "All", new { @class = "form-select w-auto" })
+    <input type="submit" value="Filter" class="btn btn-primary" />
+    <input type="hidden" name="Search" id="Search" value="@Model.Search" />
+}
+
+@if (!String.IsNullOrEmpty(Model.Search))
+{
+    <p class="text-muted">Showing results for "@Model.Search"</p>
+}
+
 <table class="table">
     <tr>
         <th>
             Campus
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Name)
+            Student Name
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Address)
+            Address
         </th>
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
+@foreach (var item in Model.Students) {
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.Campus.Name)
