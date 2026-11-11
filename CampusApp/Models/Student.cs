@@ -7,8 +7,10 @@ namespace CampusApp.Models
         [Key]
         public int ID { get; set; }
 
+        [Display(Name = "Student Name")]
         public string Name { get; set; }
 
+        [Display(Name = "Address")]
         public string Address { get; set; }
 
         public int? CampusID { get; set; }

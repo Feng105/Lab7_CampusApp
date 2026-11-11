@@ -94,8 +94,9 @@ public ActionResult Index(string campus, string search)
 - **Ordering matters**: the campus list with its counts is built *before* the campus filter is applied. Building it afterwards would leave only the selected campus in the drop-down (and a count of zero for everything else), which is the trap the tutorial warns about.
 - **View model instead of ViewBag**: `StudentIndexViewModel` carries `Students`, `Search`, `Campus`, `CampusesWithCount` and the derived `CampusFilterItems`, so the strongly typed view reads `Model.Students` and `Model.CampusFilterItems` instead of `ViewBag`. `CampusWithCount.NameWithCount` produces the `Manawatu Campus (2)` text shown in the drop-down.
 - **Search box in the navigation bar** (`Views/Shared/_Layout.cshtml`) is a GET form posting `Search` to `Students/Index`, so the term travels in the URL and survives the campus filter through the hidden field in the filter form.
+- **Column headings come from Data Annotations**: `[Display(Name = "Student Name")]` and `[Display(Name = "Address")]` on `Student`, `[Display(Name = "Campus Name")]` on `UniversityCampus`, and the list view uses `@Html.DisplayNameFor(model => model.Students.First().Name)`. `DisplayNameFor` only reads the metadata of the property, it does not execute `First()`, so an empty result set still renders.
 
-The intermediate ViewBag version was exercised first (search plus `ViewBag.Campus` as a `SelectList`); `docs/screenshots/lab8/01`–`04` were captured while that version was live, and `05`–`08` show the final view-model version with the campus counts.
+The intermediate ViewBag version was exercised first (search plus `ViewBag.Campus` as a `SelectList`); `docs/screenshots/lab8/01`–`04` were captured while that version was live, and `05`–`08` show the final view-model version with the campus counts. The `05`–`08` shots were retaken after the display annotations were added, so their headings read `Campus Name` and `Student Name`.
 
 ## Notes
 
